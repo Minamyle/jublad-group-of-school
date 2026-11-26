@@ -1,0 +1,27 @@
+HOW TO PERSONALISE THE 20TH ANNIVERSARY WEBSITE
+================================================
+
+1) PREVIEW: double-click index.html to open it in your browser.
+
+2) SCHOOL NAME, EVENT DATE, SONG
+   Open index.html in a text editor, scroll near the bottom and find:
+       const SCHOOL = { name: "...", eventDate: "...", song: "..." }
+   Change the name and event date. The name updates everywhere on the page.
+
+3) PHOTOS: put your photos in the "images" folder with EXACTLY these names:
+     logo.png          - school logo (top-left)
+     hero.jpg          - big background photo (school building)
+     principal.jpg     - principal's photo
+     achievement-1.jpg ... achievement-6.jpg  - one per achievement card
+     gallery-1.jpg ... gallery-9.jpg          - memories gallery
+     person-1.jpg ... person-4.jpg            - faces for the messages section
+   Each placeholder on the page shows the file name it needs.
+   (If your photo is .png or .jpeg, rename it to .jpg or change the name in index.html.)
+
+4) SONG: put your song in the "music" folder named  song.mp3
+   It starts when visitors click "Enter the Celebration".
+   Until you add it, a built-in cheerful tune plays instead.
+
+5) TEXT: achievements, timeline years, stats numbers, captions and messages
+   are all plain text in index.html. Search for the words you want to change.
+   Stats numbers are in data-count="..." (e.g. data-count="3500").

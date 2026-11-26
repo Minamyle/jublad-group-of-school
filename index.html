@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JUBLAD INTERNATIONAL SCHOOL | 20 Years of Excellence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold:#d4a017; --gold-light:#f5d76e; --navy:#0f1f4b; --navy-2:#1b3170;
+    --cream:#fffaf0; --rose:#e85d75; --text:#2b2b2b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Poppins',sans-serif;color:var(--text);background:var(--cream);overflow-x:hidden}
+  img{display:block;max-width:100%}
+  h1,h2,h3{font-family:'Playfair Display',serif}
+  section{padding:90px 6%}
+  .section-title{text-align:center;margin-bottom:50px}
+  .section-title h2{font-size:clamp(2rem,4vw,3rem);color:var(--navy)}
+  .section-title p{color:#666;margin-top:10px}
+  .section-title .line{width:90px;height:4px;background:linear-gradient(90deg,var(--gold),var(--rose));margin:16px auto 0;border-radius:4px}
+
+  /* ---------- Welcome screen ---------- */
+  #welcome{position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:radial-gradient(circle at center,var(--navy-2),var(--navy));color:#fff;text-align:center;padding:20px;transition:opacity 1s, visibility 1s}
+  #welcome.hide{opacity:0;visibility:hidden}
+  #welcome .big20{font-family:'Playfair Display',serif;font-size:clamp(7rem,22vw,14rem);font-weight:800;line-height:1;
+    background:linear-gradient(180deg,var(--gold-light),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:glow 2.5s ease-in-out infinite}
+  #welcome .script{font-family:'Great Vibes',cursive;font-size:clamp(2rem,5vw,3.2rem);color:var(--gold-light)}
+  #welcome p{margin:10px 0 30px;opacity:.85}
+  @keyframes glow{0%,100%{filter:drop-shadow(0 0 10px rgba(245,215,110,.4))}50%{filter:drop-shadow(0 0 30px rgba(245,215,110,.9))}}
+  .btn{display:inline-block;padding:15px 38px;border-radius:50px;border:none;cursor:pointer;font-family:inherit;font-size:1.05rem;font-weight:600;
+    background:linear-gradient(135deg,var(--gold-light),var(--gold));color:var(--navy);box-shadow:0 8px 25px rgba(212,160,23,.45);transition:transform .25s}
+  .btn:hover{transform:translateY(-3px) scale(1.04)}
+
+  /* ---------- Nav ---------- */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:14px 6%;
+    transition:background .3s, box-shadow .3s}
+  nav.scrolled{background:rgba(15,31,75,.95);box-shadow:0 4px 20px rgba(0,0,0,.2)}
+  nav .logo{display:flex;align-items:center;gap:10px;color:#fff;font-weight:600}
+  nav .logo img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--gold)}
+  nav ul{display:flex;gap:26px;list-style:none}
+  nav a{color:#fff;text-decoration:none;font-size:.95rem;opacity:.9}
+  nav a:hover{color:var(--gold-light)}
+  .menu-btn{display:none;background:none;border:none;color:#fff;font-size:1.8rem;cursor:pointer}
+  @media(max-width:860px){
+    nav ul{position:absolute;top:100%;left:0;right:0;flex-direction:column;background:var(--navy);padding:20px 6%;gap:16px;display:none}
+    nav ul.open{display:flex}
+    .menu-btn{display:block}
+  }
+
+  /* ---------- Hero ---------- */
+  #home{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;padding-top:120px;overflow:hidden}
+  #home .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;animation:zoom 20s ease-in-out infinite alternate}
+  #home::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,31,75,.75),rgba(15,31,75,.55) 50%,rgba(15,31,75,.9));z-index:-1}
+  @keyframes zoom{from{transform:scale(1)}to{transform:scale(1.12)}}
+  .hero-badge{display:inline-block;padding:8px 22px;border:1px solid var(--gold-light);border-radius:30px;color:var(--gold-light);letter-spacing:3px;font-size:.85rem;margin-bottom:20px}
+  #home h1{font-size:clamp(2.4rem,6vw,4.8rem);line-height:1.15}
+  #home h1 span{color:var(--gold-light)}
+  #home .years{font-family:'Great Vibes',cursive;font-size:clamp(2rem,5vw,3.4rem);color:var(--gold-light);margin:10px 0}
+  #home .motto{font-style:italic;opacity:.9;margin-bottom:34px}
+  .countdown{display:flex;gap:16px;justify-content:center;margin:0 0 36px;flex-wrap:wrap}
+  .countdown div{background:rgba(255,255,255,.12);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25);border-radius:14px;padding:14px 18px;min-width:84px}
+  .countdown b{display:block;font-size:2rem;font-family:'Playfair Display',serif;color:var(--gold-light)}
+  .countdown small{font-size:.75rem;letter-spacing:2px;text-transform:uppercase}
+
+  /* ---------- Stats ---------- */
+  #stats{background:linear-gradient(135deg,var(--navy),var(--navy-2));color:#fff;padding:60px 6%}
+  .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:30px;text-align:center}
+  .stat .icon{font-size:2.4rem}
+  .stat b{display:block;font-family:'Playfair Display',serif;font-size:2.8rem;color:var(--gold-light)}
+  .stat span{opacity:.85}
+
+  /* ---------- About / Principal ---------- */
+  .about{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:center}
+  .about .photo{position:relative}
+  .about .photo img{border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,.2);width:100%;aspect-ratio:4/5;object-fit:cover}
+  .about .photo::after{content:"";position:absolute;inset:20px -20px -20px 20px;border:3px solid var(--gold);border-radius:20px;z-index:-1}
+  .about h3{font-size:2rem;color:var(--navy);margin-bottom:16px}
+  .about p{line-height:1.9;margin-bottom:14px;color:#444}
+  .signature{font-family:'Great Vibes',cursive;font-size:2.2rem;color:var(--gold)}
+  @media(max-width:860px){.about{grid-template-columns:1fr}}
+
+  /* ---------- Timeline ---------- */
+  #journey{background:#fff}
+  .timeline{position:relative;max-width:1000px;margin:auto}
+  .timeline::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:4px;background:linear-gradient(var(--gold),var(--rose));transform:translateX(-50%);border-radius:4px}
+  .t-item{position:relative;width:50%;padding:20px 45px}
+  .t-item:nth-child(odd){left:0;text-align:right}
+  .t-item:nth-child(even){left:50%}
+  .t-item::after{content:"";position:absolute;top:34px;width:20px;height:20px;background:var(--gold);border:4px solid #fff;box-shadow:0 0 0 3px var(--gold);border-radius:50%}
+  .t-item:nth-child(odd)::after{right:-10px}
+  .t-item:nth-child(even)::after{left:-10px}
+  .t-card{background:var(--cream);border-radius:16px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.08)}
+  .t-card .yr{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--gold);font-weight:800}
+  .t-card h4{color:var(--navy);margin:4px 0 8px;font-size:1.1rem}
+  .t-card p{color:#555;font-size:.95rem;line-height:1.7}
+  @media(max-width:760px){
+    .timeline::before{left:18px}
+    .t-item,.t-item:nth-child(even){width:100%;left:0;text-align:left;padding:15px 0 15px 50px}
+    .t-item:nth-child(odd)::after,.t-item:nth-child(even)::after{left:8px;right:auto}
+  }
+
+  /* ---------- Achievements ---------- */
+  .ach-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px}
+  .ach{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.08);transition:transform .35s, box-shadow .35s}
+  .ach:hover{transform:translateY(-10px);box-shadow:0 20px 45px rgba(0,0,0,.15)}
+  .ach img{width:100%;aspect-ratio:16/10;object-fit:cover}
+  .ach .body{padding:22px}
+  .ach .tag{display:inline-block;font-size:.75rem;font-weight:600;padding:4px 12px;border-radius:20px;background:#fff3cd;color:#8a6500;margin-bottom:10px}
+  .ach h3{color:var(--navy);font-size:1.25rem;margin-bottom:8px}
+  .ach p{color:#555;font-size:.93rem;line-height:1.7}
+
+  /* ---------- Gallery ---------- */
+  #gallery{background:#fff}
+  .gallery{columns:3 260px;column-gap:18px}
+  .gallery figure{break-inside:avoid;margin-bottom:18px;border-radius:14px;overflow:hidden;cursor:zoom-in;position:relative}
+  .gallery img{width:100%;transition:transform .5s}
+  .gallery figure:hover img{transform:scale(1.07)}
+  .gallery figcaption{position:absolute;left:0;right:0;bottom:0;padding:30px 14px 12px;color:#fff;font-size:.9rem;
+    background:linear-gradient(transparent,rgba(0,0,0,.7));opacity:0;transition:opacity .3s}
+  .gallery figure:hover figcaption{opacity:1}
+  #lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;z-index:900;padding:30px;flex-direction:column}
+  #lightbox.open{display:flex}
+  #lightbox img{max-height:80vh;border-radius:10px}
+  #lightbox p{color:#fff;margin-top:14px}
+  #lightbox .close{position:absolute;top:20px;right:30px;color:#fff;font-size:2.5rem;cursor:pointer;background:none;border:none}
+
+  /* ---------- Messages ---------- */
+  #messages{background:linear-gradient(135deg,#fff8e7,#ffeef2)}
+  .slider{max-width:800px;margin:auto;position:relative;min-height:260px}
+  .msg{position:absolute;inset:0;text-align:center;opacity:0;transition:opacity .8s;pointer-events:none}
+  .msg.active{opacity:1;pointer-events:auto}
+  .msg img{width:90px;height:90px;border-radius:50%;object-fit:cover;margin:0 auto 18px;border:4px solid var(--gold)}
+  .msg blockquote{font-size:1.15rem;font-style:italic;line-height:1.8;color:#444}
+  .msg cite{display:block;margin-top:14px;font-weight:600;color:var(--navy);font-style:normal}
+  .dots{display:flex;gap:10px;justify-content:center;margin-top:20px}
+  .dots button{width:12px;height:12px;border-radius:50%;border:none;background:#ccc;cursor:pointer}
+  .dots button.active{background:var(--gold);width:30px;border-radius:10px}
+
+  /* ---------- Thank you ---------- */
+  #thanks{text-align:center;background:linear-gradient(135deg,var(--navy),var(--navy-2));color:#fff}
+  #thanks h2{font-size:clamp(2rem,5vw,3.4rem);color:var(--gold-light)}
+  #thanks .script{font-family:'Great Vibes',cursive;font-size:clamp(1.8rem,4vw,2.8rem);margin:10px 0 20px}
+  #thanks p{max-width:700px;margin:0 auto 30px;line-height:1.9;opacity:.9}
+  footer{background:#0a1533;color:#aab;text-align:center;padding:26px;font-size:.88rem}
+
+  /* ---------- Music button ---------- */
+  #musicBtn{position:fixed;bottom:24px;right:24px;z-index:500;width:60px;height:60px;border-radius:50%;border:none;cursor:pointer;font-size:1.6rem;
+    background:linear-gradient(135deg,var(--gold-light),var(--gold));box-shadow:0 8px 25px rgba(0,0,0,.3)}
+  #musicBtn.playing{animation:spin 4s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity .9s ease, transform .9s ease}
+  .reveal.show{opacity:1;transform:none}
+
+  #confetti{position:fixed;inset:0;pointer-events:none;z-index:1001}
+</style>
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+
+<!-- ================= WELCOME SCREEN ================= -->
+<div id="welcome">
+  <div class="script">Celebrating</div>
+  <div class="big20">20</div>
+  <div class="script">Years of Excellence</div>
+  <p class="school-name">JUBLAD</p>
+  <button class="btn" id="enterBtn">🎉 Enter the Celebration</button>
+</div>
+
+<!-- ================= NAV ================= -->
+<nav id="nav">
+  <div class="logo">
+    <img src="images/logo.png" alt="School logo" data-ph="logo.png">
+    <span class="school-name">JUBLAD</span>
+  </div>
+  <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+  <ul id="menu">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">Our Story</a></li>
+    <li><a href="#journey">Journey</a></li>
+    <li><a href="#achievements">Achievements</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#messages">Messages</a></li>
+  </ul>
+</nav>
+
+<!-- ================= HERO ================= -->
+<section id="home">
+  <img class="bg" src="images/hero.jpg" alt="School building" data-ph="hero.jpg">
+  <div>
+    <div class="hero-badge">2006 &nbsp;✦&nbsp; 2026</div>
+    <h1>Celebrating <span>20 Years</span><br>of <span class="school-name">JUBLAD</span></h1>
+    <div class="years">Two decades of learning, love &amp; light</div>
+    <p class="motto">“[Your School Motto Goes Here]”</p>
+    <div class="countdown" id="countdown">
+      <div><b id="cd-d">0</b><small>Days</small></div>
+      <div><b id="cd-h">0</b><small>Hours</small></div>
+      <div><b id="cd-m">0</b><small>Minutes</small></div>
+      <div><b id="cd-s">0</b><small>Seconds</small></div>
+    </div>
+    <a href="#achievements" class="btn">✨ See Our Achievements</a>
+  </div>
+</section>
+
+<!-- ================= STATS ================= -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat reveal"><div class="icon">🎓</div><b data-count="3500">0</b><span>Proud Graduates</span></div>
+    <div class="stat reveal"><div class="icon">👩‍🏫</div><b data-count="120">0</b><span>Dedicated Teachers</span></div>
+    <div class="stat reveal"><div class="icon">🏆</div><b data-count="250">0</b><span>Awards Won</span></div>
+    <div class="stat reveal"><div class="icon">📚</div><b data-count="98">0</b><span>% Exam Pass Rate</span></div>
+    <div class="stat reveal"><div class="icon">❤️</div><b data-count="20">0</b><span>Wonderful Years</span></div>
+  </div>
+</section>
+
+<!-- ================= ABOUT / PRINCIPAL ================= -->
+<section id="about">
+  <div class="section-title reveal"><h2>Our Story</h2><p>A message from our Principal</p><div class="line"></div></div>
+  <div class="about">
+    <div class="photo reveal"><img src="images/principal.jpg" alt="Principal" data-ph="principal.jpg"></div>
+    <div class="reveal">
+      <h3>Twenty years ago, a dream was planted…</h3>
+      <p>In 2006, <span class="school-name">JUBLAD</span> opened its doors with a handful of pupils, a small team of passionate teachers, and one big dream: to give every child a place where they are known, loved and inspired to become their very best.</p>
+      <p>Today, as we celebrate two decades, we look back with gratitude at the thousands of children who have walked through our gates, the teachers who poured their hearts into every lesson, and above all, you, our parents, whose trust and support made all of this possible.</p>
+      <p>Thank you for being part of our family. The best is yet to come!</p>
+      <div class="signature">[Principal's Name]</div>
+      <small>Principal / Head Teacher</small>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TIMELINE ================= -->
+<section id="journey">
+  <div class="section-title reveal"><h2>Our 20-Year Journey</h2><p>The milestones that shaped who we are</p><div class="line"></div></div>
+  <div class="timeline">
+    <div class="t-item reveal"><div class="t-card"><div class="yr">2006</div><h4>The Beginning</h4><p>Our school opened its doors to its very first pupils, with a vision to nurture bright, confident young minds.</p></div></div>
+    <div class="t-item reveal"><div class="t-card"><div class="yr">2009</div><h4>Our First Graduates</h4><p>We proudly celebrated our very first graduating class, the first of many success stories.</p></div></div>
+    <div class="t-item reveal"><div class="t-card"><div class="yr">2012</div><h4>New Building &amp; Library</h4><p>We expanded our campus with new classrooms and a fully stocked library to spark a love of reading.</p></div></div>
+    <div class="t-item reveal"><div class="t-card"><div class="yr">2015</div><h4>Science &amp; ICT Labs</h4><p>Modern science and computer laboratories opened, bringing hands-on learning to every pupil.</p></div></div>
+    <div class="t-item reveal"><div class="t-card"><div class="yr">2018</div><h4>National Recognition</h4><p>Our pupils earned top honours at national competitions, putting our school on the map.</p></div></div>
+    <div class="t-item reveal"><div class="t-card"><div class="yr">2021</div><h4>Stronger Together</h4><p>Through challenging times, our community adapted, innovated and kept learning alive.</p></div></div>
+    <div class="t-item reveal"><div class="t-card"><div class="yr">2026</div><h4>20 Years of Excellence 🎉</h4><p>Today we celebrate two decades of growth, success and love, and look forward to an even brighter future.</p></div></div>
+  </div>
+</section>
+
+<!-- ================= ACHIEVEMENTS ================= -->
+<section id="achievements">
+  <div class="section-title reveal"><h2>Our Proud Achievements</h2><p>Milestones our pupils, teachers and parents made possible</p><div class="line"></div></div>
+  <div class="ach-grid">
+    <div class="ach reveal"><img src="images/achievement-1.jpg" alt="" data-ph="achievement-1.jpg"><div class="body"><span class="tag">🎓 Academics</span><h3>Outstanding Exam Results</h3><p>Year after year, our pupils achieve excellent results in national examinations, with many earning distinctions.</p></div></div>
+    <div class="ach reveal"><img src="images/achievement-2.jpg" alt="" data-ph="achievement-2.jpg"><div class="body"><span class="tag">⚽ Sports</span><h3>Inter-School Sports Champions</h3><p>Our athletes have brought home trophies in football, athletics and more, showing true teamwork and spirit.</p></div></div>
+    <div class="ach reveal"><img src="images/achievement-3.jpg" alt="" data-ph="achievement-3.jpg"><div class="body"><span class="tag">🔬 Science</span><h3>Science Fair Winners</h3><p>Our young scientists have impressed judges with creative, award-winning projects at state and national fairs.</p></div></div>
+    <div class="ach reveal"><img src="images/achievement-4.jpg" alt="" data-ph="achievement-4.jpg"><div class="body"><span class="tag">🎭 Arts</span><h3>Cultural &amp; Drama Excellence</h3><p>From colourful cultural days to stunning drama productions, our pupils shine on every stage.</p></div></div>
+    <div class="ach reveal"><img src="images/achievement-5.jpg" alt="" data-ph="achievement-5.jpg"><div class="body"><span class="tag">🗣️ Debate</span><h3>Spelling Bee &amp; Debate Awards</h3><p>Confident speakers and brilliant spellers, our pupils have won top prizes in competitions across the region.</p></div></div>
+    <div class="ach reveal"><img src="images/achievement-6.jpg" alt="" data-ph="achievement-6.jpg"><div class="body"><span class="tag">🤝 Community</span><h3>Community Service</h3><p>Through outreach programmes and charity drives, we teach our children kindness and responsibility.</p></div></div>
+  </div>
+</section>
+
+<!-- ================= GALLERY ================= -->
+<section id="gallery">
+  <div class="section-title reveal"><h2>Memories Through the Years</h2><p>Click any photo to view it larger</p><div class="line"></div></div>
+  <div class="gallery">
+    <figure class="reveal"><img src="images/gallery-1.jpg" alt="Memory 1" data-ph="gallery-1.jpg" data-h="400"><figcaption>Our first day, 2006</figcaption></figure>
+    <figure class="reveal"><img src="images/gallery-2.jpg" alt="Memory 2" data-ph="gallery-2.jpg" data-h="280"><figcaption>Graduation Day</figcaption></figure>
+    <figure class="reveal"><img src="images/gallery-3.jpg" alt="Memory 3" data-ph="gallery-3.jpg" data-h="340"><figcaption>Inter-House Sports</figcaption></figure>
+    <figure class="reveal"><img src="images/gallery-4.jpg" alt="Memory 4" data-ph="gallery-4.jpg" data-h="300"><figcaption>Cultural Day</figcaption></figure>
+    <figure class="reveal"><img src="images/gallery-5.jpg" alt="Memory 5" data-ph="gallery-5.jpg" data-h="420"><figcaption>Science Fair</figcaption></figure>
+    <figure class="reveal"><img src="images/gallery-6.jpg" alt="Memory 6" data-ph="gallery-6.jpg" data-h="280"><figcaption>Our amazing teachers</figcaption></figure>
+    <figure class="reveal"><img src="images/gallery-7.jpg" alt="Memory 7" data-ph="gallery-7.jpg" data-h="360"><figcaption>Excursion</figcaption></figure>
+    <figure class="reveal"><img src="images/gallery-8.jpg" alt="Memory 8" data-ph="gallery-8.jpg" data-h="300"><figcaption>Prize-giving Day</figcaption></figure>
+    <figure class="reveal"><img src="images/gallery-9.jpg" alt="Memory 9" data-ph="gallery-9.jpg" data-h="380"><figcaption>Our school family</figcaption></figure>
+  </div>
+</section>
+
+<div id="lightbox"><button class="close" id="lbClose">×</button><img id="lbImg" alt=""><p id="lbCap"></p></div>
+
+<!-- ================= MESSAGES ================= -->
+<section id="messages">
+  <div class="section-title reveal"><h2>Words From Our Family</h2><p>Parents, alumni and staff share their love</p><div class="line"></div></div>
+  <div class="slider" id="slider">
+    <div class="msg active"><img src="images/person-1.jpg" alt="" data-ph="person-1.jpg"><blockquote>“This school has been a second home to my children. The teachers truly care, and it shows in everything they do.”</blockquote><cite>A Proud Parent</cite></div>
+    <div class="msg"><img src="images/person-2.jpg" alt="" data-ph="person-2.jpg"><blockquote>“Everything I am today started here. Thank you for believing in me before I believed in myself.”</blockquote><cite>Alumnus, Class of 2010</cite></div>
+    <div class="msg"><img src="images/person-3.jpg" alt="" data-ph="person-3.jpg"><blockquote>“Teaching here for over a decade has been the joy of my life. Watching our pupils grow is the greatest reward.”</blockquote><cite>A Long-Serving Teacher</cite></div>
+    <div class="msg"><img src="images/person-4.jpg" alt="" data-ph="person-4.jpg"><blockquote>“Happy 20th anniversary! We are so grateful to be part of this wonderful school family.”</blockquote><cite>The Parents' Association</cite></div>
+  </div>
+  <div class="dots" id="dots"></div>
+</section>
+
+<!-- ================= THANK YOU ================= -->
+<section id="thanks">
+  <div class="reveal">
+    <h2>Thank You, Parents!</h2>
+    <div class="script">Here's to the next 20 years 🥂</div>
+    <p>None of this would be possible without your trust, love and support. Together, we have built something truly special. Join us as we celebrate this golden milestone!</p>
+    <button class="btn" id="celebrateBtn">🎊 Celebrate With Us!</button>
+  </div>
+</section>
+
+<footer>© 2026 <span class="school-name">JUBLAD</span> · 20th Anniversary Celebration · Made with ❤️</footer>
+
+<button id="musicBtn" title="Play / pause music">🎵</button>
+
+<script>
+/* =====================================================
+   ✏️  EDIT THESE DETAILS. They update everywhere on the page.
+   ===================================================== */
+const SCHOOL = {
+  name: "JUBLAD INTERNATIONAL SCHOOL",
+  eventDate: "2026-12-12T10:00:00",   // anniversary event date & time (YYYY-MM-DDTHH:MM:SS)
+  song: "music/song.mp3"              // put your song here. If missing, a built-in tune plays.
+};
+
+/* ---------- School name everywhere ---------- */
+document.querySelectorAll('.school-name').forEach(el => el.textContent = SCHOOL.name);
+
+/* ---------- Placeholder images (shown until you add the real file) ---------- */
+function placeholder(name, h){
+  h = h || 500;
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='${h*1.6}' viewBox='0 0 800 ${h*1.6}'>
+    <defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#1b3170'/><stop offset='1' stop-color='#d4a017'/></linearGradient></defs>
+    <rect width='100%' height='100%' fill='url(#g)'/>
+    <text x='50%' y='45%' font-family='Arial' font-size='60' fill='white' text-anchor='middle'>📷</text>
+    <text x='50%' y='58%' font-family='Arial' font-size='30' fill='white' text-anchor='middle'>Replace with</text>
+    <text x='50%' y='66%' font-family='Arial' font-size='30' font-weight='bold' fill='#fff3b0' text-anchor='middle'>images/${name}</text></svg>`;
+  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+}
+document.querySelectorAll('img[data-ph]').forEach(img => {
+  const set = () => { img.onerror = null; img.src = placeholder(img.dataset.ph, +img.dataset.h || 500); };
+  img.onerror = set;
+  if (img.complete && img.naturalWidth === 0) set();
+});
+
+/* ---------- Nav ---------- */
+const nav = document.getElementById('nav');
+addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
+document.getElementById('menuBtn').onclick = () => document.getElementById('menu').classList.toggle('open');
+document.querySelectorAll('#menu a').forEach(a => a.onclick = () => document.getElementById('menu').classList.remove('open'));
+
+/* ---------- Countdown ---------- */
+function tick(){
+  const diff = new Date(SCHOOL.eventDate) - new Date();
+  const cd = document.getElementById('countdown');
+  if (diff <= 0){ cd.innerHTML = '<div style="padding:16px 28px"><b>🎉 Happening Now!</b></div>'; return; }
+  const d = Math.floor(diff/864e5), h = Math.floor(diff/36e5)%24, m = Math.floor(diff/6e4)%60, s = Math.floor(diff/1e3)%60;
+  document.getElementById('cd-d').textContent = d;
+  document.getElementById('cd-h').textContent = h;
+  document.getElementById('cd-m').textContent = m;
+  document.getElementById('cd-s').textContent = s;
+  setTimeout(tick, 1000);
+}
+tick();
+
+/* ---------- Reveal on scroll + counters ---------- */
+const io = new IntersectionObserver(entries => entries.forEach(e => {
+  if (!e.isIntersecting) return;
+  e.target.classList.add('show');
+  const num = e.target.querySelector('[data-count]');
+  if (num && !num.dataset.done){
+    num.dataset.done = 1;
+    const target = +num.dataset.count, start = performance.now();
+    const step = t => { const p = Math.min((t-start)/2000,1); num.textContent = Math.floor(target*(1-Math.pow(1-p,3))).toLocaleString() + (p===1 && target>=100 ? '+' : ''); if (p<1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }
+  io.unobserve(e.target);
+}), {threshold:.15});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ---------- Lightbox ---------- */
+const lb = document.getElementById('lightbox');
+document.querySelectorAll('.gallery figure').forEach(f => f.onclick = () => {
+  document.getElementById('lbImg').src = f.querySelector('img').src;
+  document.getElementById('lbCap').textContent = f.querySelector('figcaption').textContent;
+  lb.classList.add('open');
+});
+lb.onclick = e => { if (e.target === lb || e.target.id === 'lbClose') lb.classList.remove('open'); };
+
+/* ---------- Messages slider ---------- */
+const msgs = document.querySelectorAll('.msg'), dots = document.getElementById('dots');
+let cur = 0;
+msgs.forEach((_, i) => { const b = document.createElement('button'); b.onclick = () => show(i); dots.appendChild(b); });
+function show(i){ msgs[cur].classList.remove('active'); dots.children[cur].classList.remove('active'); cur = i; msgs[cur].classList.add('active'); dots.children[cur].classList.add('active'); }
+show(0);
+setInterval(() => show((cur+1) % msgs.length), 6000);
+
+/* ---------- Confetti ---------- */
+const cv = document.getElementById('confetti'), cx = cv.getContext('2d');
+let parts = [];
+function size(){ cv.width = innerWidth; cv.height = innerHeight; }
+size(); addEventListener('resize', size);
+function burst(n){
+  const colors = ['#d4a017','#f5d76e','#e85d75','#ffffff','#4fc3f7','#81c784'];
+  for (let i=0;i<n;i++) parts.push({x:Math.random()*cv.width, y:-20-Math.random()*cv.height*.5, w:6+Math.random()*8, h:8+Math.random()*10,
+    c:colors[Math.random()*colors.length|0], vy:2+Math.random()*3, vx:-1.5+Math.random()*3, r:Math.random()*6, vr:-.15+Math.random()*.3});
+}
+(function loop(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  parts.forEach(p => { p.y+=p.vy; p.x+=p.vx; p.r+=p.vr; cx.save(); cx.translate(p.x,p.y); cx.rotate(p.r); cx.fillStyle=p.c; cx.fillRect(-p.w/2,-p.h/2,p.w,p.h); cx.restore(); });
+  parts = parts.filter(p => p.y < cv.height + 30);
+  requestAnimationFrame(loop);
+})();
+document.getElementById('celebrateBtn').onclick = () => burst(250);
+
+/* ---------- Music: your song, or a built-in celebration tune ---------- */
+const musicBtn = document.getElementById('musicBtn');
+let audio = null, synth = null, playing = false;
+
+function makeSynth(){
+  const ac = new (window.AudioContext || window.webkitAudioContext)();
+  const master = ac.createGain(); master.gain.value = .18; master.connect(ac.destination);
+  // An original cheerful waltz-like melody: [note, beats]
+  const N = {C4:261.6,D4:293.7,E4:329.6,F4:349.2,G4:392,A4:440,B4:493.9,C5:523.3,D5:587.3,E5:659.3,F5:698.5,G5:784};
+  const melody = [['E4',1],['G4',1],['C5',2],['B4',1],['A4',1],['G4',2],['A4',1],['C5',1],['F5',2],['E5',1],['D5',1],['C5',2],
+                  ['D5',1],['E5',1],['G5',2],['F5',1],['E5',1],['D5',2],['C5',1],['E5',1],['D5',1],['B4',1],['C5',4]];
+  const bass = [['C4',4],['F4',4],['F4',4],['C4',4],['G4',4],['G4',4],['C4',4],['G4',2],['C4',2]];
+  const beat = .32;
+  function note(freq, t, dur, type, vol){
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t+.03); g.gain.exponentialRampToValueAtTime(.001, t+dur);
+    o.connect(g); g.connect(master); o.start(t); o.stop(t+dur+.05);
+  }
+  let timer = null;
+  function schedule(){
+    let t = ac.currentTime + .1, total = 0;
+    melody.forEach(([n,b]) => { note(N[n], t+total*beat, b*beat*1.1, 'triangle', .9); note(N[n]*2, t+total*beat, b*beat*.6, 'sine', .15); total += b; });
+    let bt = 0;
+    bass.forEach(([n,b]) => { for (let k=0;k<b;k++){ note(N[n]/2, t+(bt+k)*beat, beat*.9, 'sine', k%2?.25:.5); } bt += b; });
+    timer = setTimeout(schedule, (total*beat + .6)*1000);
+  }
+  return {
+    play(){ ac.resume(); if (!timer) schedule(); },
+    pause(){ clearTimeout(timer); timer = null; ac.suspend(); }
+  };
+}
+
+function startMusic(){
+  audio = new Audio(SCHOOL.song);
+  audio.loop = true;
+  audio.play().then(() => { playing = true; musicBtn.classList.add('playing'); })
+    .catch(() => { audio = null; synth = makeSynth(); synth.play(); playing = true; musicBtn.classList.add('playing'); });
+}
+musicBtn.onclick = () => {
+  if (!audio && !synth) return startMusic();
+  if (playing){ audio ? audio.pause() : synth.pause(); musicBtn.classList.remove('playing'); }
+  else { audio ? audio.play() : synth.play(); musicBtn.classList.add('playing'); }
+  playing = !playing;
+};
+
+/* ---------- Welcome screen ---------- */
+document.getElementById('enterBtn').onclick = () => {
+  document.getElementById('welcome').classList.add('hide');
+  startMusic();
+  burst(300);
+};
+</script>
+</body>
+</html>
