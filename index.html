@@ -41,7 +41,7 @@
     transition:background .3s, box-shadow .3s}
   nav.scrolled{background:rgba(59,10,92,.95);box-shadow:0 4px 20px rgba(0,0,0,.2)}
   nav .logo{display:flex;align-items:center;gap:10px;color:#fff;font-weight:600}
-  nav .logo img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--gold)}
+  nav .logo img{width:48px;height:48px;border-radius:50%;object-fit:contain;background:#fff;padding:3px;border:2px solid var(--gold)}
   nav ul{display:flex;gap:26px;list-style:none}
   nav a{color:#fff;text-decoration:none;font-size:.95rem;opacity:.9}
   nav a:hover{color:var(--gold-light)}
@@ -59,7 +59,6 @@
   @keyframes zoom{from{transform:scale(1)}to{transform:scale(1.12)}}
   .hero-badge{display:inline-block;padding:8px 22px;border:1px solid var(--gold-light);border-radius:30px;color:var(--gold-light);letter-spacing:3px;font-size:.85rem;margin-bottom:20px}
   #home h1{font-size:clamp(2.4rem,6vw,4.8rem);line-height:1.15}
-  #home h1 span{color:var(--gold-light)}
   #home .years{font-family:'Great Vibes',cursive;font-size:clamp(2rem,5vw,3.4rem);color:var(--gold-light);margin:10px 0}
   #home .motto{font-style:italic;opacity:.9;margin-bottom:34px}
   .countdown{display:flex;gap:16px;justify-content:center;margin:0 0 36px;flex-wrap:wrap}
@@ -158,6 +157,142 @@
   .reveal{opacity:0;transform:translateY(40px);transition:opacity .9s ease, transform .9s ease}
   .reveal.show{opacity:1;transform:none}
 
+  /* =========================================================
+     ANIMATIONS
+     ========================================================= */
+  /* Hero title: words rise in one by one after "Enter" */
+  #heroTitle{perspective:600px}
+  #heroTitle .w{display:inline-block;opacity:0;transform:translateY(70px) rotateX(-80deg);filter:blur(10px);transform-origin:50% 100%}
+  body.entered #heroTitle .w{animation:wordIn 1s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--i) * .16s + .5s)}
+  @keyframes wordIn{to{opacity:1;transform:none;filter:blur(0)}}
+  /* Shimmering gold text on "20 Years" and the school name */
+  #heroTitle .gold .w{
+    background:linear-gradient(90deg,var(--gold) 0%,var(--gold-light) 25%,#fff 50%,var(--gold-light) 75%,var(--gold) 100%);
+    background-size:250% auto;-webkit-background-clip:text;background-clip:text;color:transparent}
+  body.entered #heroTitle .gold .w{animation:wordIn 1s cubic-bezier(.2,.8,.2,1) forwards, shimmer 4s linear infinite;
+    animation-delay:calc(var(--i) * .16s + .5s), calc(var(--i) * .16s + 1.5s)}
+  @keyframes shimmer{to{background-position:-250% center}}
+  /* Gold line that draws itself under the title */
+  .flourish{height:3px;width:0;margin:14px auto 6px;border-radius:3px;background:linear-gradient(90deg,transparent,var(--gold-light),transparent)}
+  body.entered .flourish{animation:draw 1.4s ease forwards 1.9s}
+  @keyframes draw{to{width:min(320px,70%)}}
+  /* Rest of the hero fades up in sequence */
+  .hero-content{position:relative;z-index:1}
+  .hero-content > :not(h1):not(.flourish){opacity:0;transform:translateY(30px)}
+  body.entered .hero-content > :not(h1):not(.flourish){animation:fadeUp .9s ease forwards}
+  body.entered .hero-content > .hero-badge{animation-delay:.2s !important}
+  body.entered .hero-content > .years{animation-delay:2.1s !important}
+  body.entered .hero-content > .motto{animation-delay:2.4s !important}
+  body.entered .hero-content > .countdown{animation-delay:2.7s !important}
+  body.entered .hero-content > .btn{animation:fadeUp .9s ease forwards 3s, pulseGlow 2.4s ease-in-out infinite 4s}
+  @keyframes fadeUp{to{opacity:1;transform:none}}
+  @keyframes pulseGlow{0%,100%{box-shadow:0 8px 25px rgba(212,160,23,.45)}50%{box-shadow:0 8px 40px rgba(245,215,110,.95)}}
+  .countdown b.pop{animation:pop .45s ease}
+  @keyframes pop{40%{transform:scale(1.25);color:#fff}}
+
+  /* Floating sparkles & balloons */
+  .sparkles{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+  .sparkles span{position:absolute;bottom:-40px;color:var(--gold-light);opacity:0;animation:floatUp linear infinite;text-shadow:0 0 10px rgba(245,215,110,.8)}
+  @keyframes floatUp{
+    0%{transform:translate(0,0) rotate(0);opacity:0}
+    10%{opacity:var(--o,.9)}
+    50%{transform:translate(var(--sway),-55vh) rotate(180deg)}
+    90%{opacity:var(--o,.9)}
+    100%{transform:translate(0,-115vh) rotate(360deg);opacity:0}}
+  #welcome > :not(.sparkles){position:relative;z-index:1}
+
+  /* Section titles: underline grows in */
+  .section-title .line{width:0;transition:width 1.2s ease .4s}
+  .section-title.show .line{width:90px}
+
+  /* Timeline: cards slide in from the sides, dots pop */
+  .t-item.reveal:nth-child(odd){transform:translateX(-70px)}
+  .t-item.reveal:nth-child(even){transform:translateX(70px)}
+  .t-item.reveal.show{transform:none}
+  .t-item::after{transform:scale(0);transition:transform .6s cubic-bezier(.3,1.8,.5,1) .4s}
+  .t-item.show::after{transform:scale(1)}
+  .t-item:last-child.show::after{animation:ring 2s ease-out infinite 1s}
+  @keyframes ring{0%{box-shadow:0 0 0 3px var(--gold),0 0 0 3px rgba(212,160,23,.6)}100%{box-shadow:0 0 0 3px var(--gold),0 0 0 22px rgba(212,160,23,0)}}
+  @media(max-width:760px){.t-item.reveal:nth-child(odd){transform:translateX(60px)} .t-item.reveal.show{transform:none}}
+
+  /* Achievements: light sweep on hover */
+  .ach{position:relative}
+  .ach::before{content:"";position:absolute;top:0;left:-75%;width:50%;height:100%;z-index:2;pointer-events:none;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg)}
+  .ach:hover::before{animation:sweep .9s ease}
+  @keyframes sweep{to{left:130%}}
+
+  /* Gallery: photos zoom in gently */
+  .gallery figure.reveal{transform:scale(.88) translateY(30px)}
+  .gallery figure.reveal.show{transform:none}
+
+  /* Stats icons bob */
+  .stat .icon{display:inline-block;animation:bob 3s ease-in-out infinite}
+  .stat:nth-child(2) .icon{animation-delay:.4s}.stat:nth-child(3) .icon{animation-delay:.8s}
+  .stat:nth-child(4) .icon{animation-delay:1.2s}.stat:nth-child(5) .icon{animation-delay:1.6s}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+  /* Proprietress: gold frame slides in, signature writes itself */
+  .about .photo::after{transition:transform 1s ease .3s, opacity 1s ease .3s;transform:translate(-20px,-20px);opacity:0}
+  .about .photo.show::after{transform:none;opacity:1}
+  .reveal .signature{clip-path:inset(0 100% 0 0);transition:clip-path 2.2s ease .8s}
+  .reveal.show .signature{clip-path:inset(0 0 0 0)}
+
+  /* Nav links: underline grows on hover */
+  nav a{position:relative}
+  nav a::after{content:"";position:absolute;left:0;bottom:-4px;height:2px;width:100%;background:var(--gold-light);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+  nav a:hover::after{transform:scaleX(1)}
+
+  /* Respect visitors who prefer less motion */
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation:none !important;transition:none !important}
+    #heroTitle .w,.hero-content > *,.reveal{opacity:1 !important;transform:none !important;filter:none !important}
+    .reveal .signature{clip-path:none}
+    .section-title .line{width:90px}
+    .flourish{width:min(320px,70%)}
+    .sparkles{display:none}
+  }
+
+  /* ---------- Welcome logo ---------- */
+  .welcome-logo{width:clamp(90px,14vw,130px);aspect-ratio:1;object-fit:contain;background:#fff;border-radius:50%;padding:10px;margin-bottom:10px;
+    border:3px solid var(--gold);animation:logoIn 1.2s cubic-bezier(.3,1.6,.5,1) both, logoGlow 3s ease-in-out infinite 1.2s}
+  @keyframes logoIn{from{transform:scale(0) rotate(-180deg);opacity:0}}
+  @keyframes logoGlow{0%,100%{box-shadow:0 0 0 0 rgba(245,215,110,.0),0 0 20px rgba(245,215,110,.4)}50%{box-shadow:0 0 0 10px rgba(245,215,110,.15),0 0 40px rgba(245,215,110,.8)}}
+
+  /* ---------- Creative Arts & Innovations ---------- */
+  #creative{position:relative;overflow:hidden;background:linear-gradient(160deg,#f7effd 0%,#fffaf0 60%,#fdf3e1 100%)}
+  #creative > *:not(.floaters){position:relative;z-index:1}
+  .creative-intro{max-width:760px;margin:-20px auto 26px;text-align:center;line-height:1.9;color:#444}
+  .creative-pills{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-bottom:44px}
+  .creative-pills span{padding:9px 20px;border-radius:30px;background:#fff;color:var(--navy);font-weight:600;font-size:.9rem;
+    border:2px solid transparent;background-image:linear-gradient(#fff,#fff),linear-gradient(135deg,var(--navy-2),var(--gold));
+    background-origin:border-box;background-clip:padding-box,border-box;box-shadow:0 6px 18px rgba(59,10,92,.1);transition:transform .3s}
+  .creative-pills span:hover{transform:translateY(-4px) rotate(-2deg)}
+  .creative-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));grid-auto-flow:dense;gap:16px}
+  .creative-grid figure{position:relative;border-radius:16px;overflow:hidden;cursor:zoom-in;aspect-ratio:4/3;box-shadow:0 10px 26px rgba(59,10,92,.15)}
+  .creative-grid figure:nth-child(1){grid-column:span 2;grid-row:span 2}
+  .creative-grid figure:nth-child(7){grid-column:span 2}
+  .creative-grid figure:nth-child(1), .creative-grid figure:nth-child(7){aspect-ratio:auto}
+  .creative-grid img{width:100%;height:100%;object-fit:cover;transition:transform .6s, filter .6s}
+  .creative-grid figure:hover img{transform:scale(1.08) rotate(.6deg);filter:saturate(1.2)}
+  .creative-grid figcaption{position:absolute;left:0;right:0;bottom:0;padding:30px 14px 12px;color:#fff;font-size:.88rem;
+    background:linear-gradient(transparent,rgba(59,10,92,.85));transform:translateY(100%);transition:transform .35s}
+  .creative-grid figure:hover figcaption{transform:none}
+  .creative-grid figure::after{content:"";position:absolute;inset:0;border:3px solid var(--gold-light);border-radius:16px;opacity:0;transition:opacity .35s}
+  .creative-grid figure:hover::after{opacity:1}
+  .creative-grid figure.reveal{transform:translateY(40px) scale(.9) rotate(-2deg)}
+  .creative-grid figure.reveal:nth-child(even){transform:translateY(40px) scale(.9) rotate(2deg)}
+  .creative-grid figure.reveal.show{transform:none}
+  @media(max-width:560px){.creative-grid figure:nth-child(1),.creative-grid figure:nth-child(7){grid-column:auto;grid-row:auto;aspect-ratio:4/3}}
+  .floaters span{position:absolute;font-size:2.4rem;opacity:.18;animation:drift 12s ease-in-out infinite}
+  .floaters span:nth-child(1){top:6%;left:5%}
+  .floaters span:nth-child(2){top:12%;right:7%;animation-delay:-2s}
+  .floaters span:nth-child(3){top:45%;left:2%;animation-delay:-4s}
+  .floaters span:nth-child(4){top:55%;right:3%;animation-delay:-6s}
+  .floaters span:nth-child(5){bottom:8%;left:8%;animation-delay:-8s}
+  .floaters span:nth-child(6){bottom:4%;right:10%;animation-delay:-10s}
+  @keyframes drift{0%,100%{transform:translate(0,0) rotate(0)}33%{transform:translate(18px,-24px) rotate(15deg)}66%{transform:translate(-14px,12px) rotate(-12deg)}}
+
   #confetti{position:fixed;inset:0;pointer-events:none;z-index:1001}
 </style>
 </head>
@@ -167,6 +302,8 @@
 
 <!-- ================= WELCOME SCREEN ================= -->
 <div id="welcome">
+  <div class="sparkles" id="welcomeSparkles" aria-hidden="true"></div>
+  <img class="welcome-logo" src="images/logo/logo.jpeg" alt="Jublad school logo">
   <div class="script">Celebrating</div>
   <div class="big20">20</div>
   <div class="script">Years of Excellence</div>
@@ -177,7 +314,7 @@
 <!-- ================= NAV ================= -->
 <nav id="nav">
   <div class="logo">
-    <img src="images/logo.png" alt="School logo" data-ph="logo.png">
+    <img src="images/logo/logo.jpeg" alt="Jublad school logo">
     <span class="school-name">JUBLAD</span>
   </div>
   <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
@@ -186,6 +323,7 @@
     <li><a href="#about">Our Story</a></li>
     <li><a href="#journey">Journey</a></li>
     <li><a href="#achievements">Achievements</a></li>
+    <li><a href="#creative">Creativity</a></li>
     <li><a href="#gallery">Gallery</a></li>
     <li><a href="#messages">Messages</a></li>
   </ul>
@@ -194,9 +332,11 @@
 <!-- ================= HERO ================= -->
 <section id="home">
   <img class="bg" src="images/hero.jpg" alt="School building" data-ph="hero.jpg">
-  <div>
+  <div class="sparkles" id="heroSparkles" aria-hidden="true"></div>
+  <div class="hero-content">
     <div class="hero-badge">2006 &nbsp;✦&nbsp; 2026</div>
-    <h1>Celebrating <span>20 Years</span><br>of <span class="school-name">JUBLAD</span></h1>
+    <h1 id="heroTitle">Celebrating <span class="gold">20 Years</span><br>of <span class="school-name gold">JUBLAD</span></h1>
+    <div class="flourish"></div>
     <div class="years">Two decades of learning, love &amp; light</div>
     <p class="motto">“Excellence knows no gender”</p>
     <div class="countdown" id="countdown">
@@ -260,6 +400,30 @@
     <div class="ach reveal"><img src="images/achievement-4.jpg" alt="" data-ph="achievement-4.jpg"><div class="body"><span class="tag">🎭 Arts</span><h3>Cultural &amp; Drama Excellence</h3><p>From colourful cultural days to stunning drama productions, our pupils shine on every stage.</p></div></div>
     <div class="ach reveal"><img src="images/achievement-5.jpg" alt="" data-ph="achievement-5.jpg"><div class="body"><span class="tag">🗣️ Debate</span><h3>Spelling Bee &amp; Debate Awards</h3><p>Confident speakers and brilliant spellers, our pupils have won top prizes in competitions across the region.</p></div></div>
     <div class="ach reveal"><img src="images/achievement-6.jpg" alt="" data-ph="achievement-6.jpg"><div class="body"><span class="tag">🤝 Community</span><h3>Community Service</h3><p>Through outreach programmes and charity drives, we teach our children kindness and responsibility.</p></div></div>
+  </div>
+</section>
+
+<!-- ================= CREATIVE ARTS & INNOVATIONS ================= -->
+<section id="creative">
+  <div class="floaters" aria-hidden="true"><span>🎨</span><span>💡</span><span>✂️</span><span>🔧</span><span>🖌️</span><span>⚙️</span></div>
+  <div class="section-title reveal"><h2>Creative Arts &amp; Innovations</h2><p>Young minds, big ideas, built with their own hands</p><div class="line"></div></div>
+  <p class="creative-intro reveal">At <span class="school-name">JUBLAD</span>, we believe every child is a creator. From model buildings made of cardboard to working inventions, our pupils turn everyday materials into brilliant ideas, learning to think, design and solve problems along the way.</p>
+  <div class="creative-pills reveal">
+    <span>🏠 Model Building</span><span>💡 Science Inventions</span><span>🎨 Arts &amp; Crafts</span><span>♻️ Recycled Materials</span>
+  </div>
+  <div class="creative-grid">
+    <figure class="reveal"><img src="images/creative-art_and_innovations/creative-01.jpeg" alt="Creative Arts &amp; Innovations project 1" loading="lazy"><figcaption>Creative Arts &amp; Innovations</figcaption></figure>
+    <figure class="reveal"><img src="images/creative-art_and_innovations/creative-02.jpeg" alt="Creative Arts &amp; Innovations project 2" loading="lazy"><figcaption>Creative Arts &amp; Innovations</figcaption></figure>
+    <figure class="reveal"><img src="images/creative-art_and_innovations/creative-03.jpeg" alt="Creative Arts &amp; Innovations project 3" loading="lazy"><figcaption>Creative Arts &amp; Innovations</figcaption></figure>
+    <figure class="reveal"><img src="images/creative-art_and_innovations/creative-04.jpeg" alt="Creative Arts &amp; Innovations project 4" loading="lazy"><figcaption>Creative Arts &amp; Innovations</figcaption></figure>
+    <figure class="reveal"><img src="images/creative-art_and_innovations/creative-05.jpeg" alt="Creative Arts &amp; Innovations project 5" loading="lazy"><figcaption>Creative Arts &amp; Innovations</figcaption></figure>
+    <figure class="reveal"><img src="images/creative-art_and_innovations/creative-06.jpeg" alt="Creative Arts &amp; Innovations project 6" loading="lazy"><figcaption>Creative Arts &amp; Innovations</figcaption></figure>
+    <figure class="reveal"><img src="images/creative-art_and_innovations/creative-07.jpeg" alt="Creative Arts &amp; Innovations project 7" loading="lazy"><figcaption>Creative Arts &amp; Innovations</figcaption></figure>
+    <figure class="reveal"><img src="images/creative-art_and_innovations/creative-08.jpeg" alt="Creative Arts &amp; Innovations project 8" loading="lazy"><figcaption>Creative Arts &amp; Innovations</figcaption></figure>
+    <figure class="reveal"><img src="images/creative-art_and_innovations/creative-09.jpeg" alt="Creative Arts &amp; Innovations project 9" loading="lazy"><figcaption>Creative Arts &amp; Innovations</figcaption></figure>
+    <figure class="reveal"><img src="images/creative-art_and_innovations/creative-10.jpeg" alt="Creative Arts &amp; Innovations project 10" loading="lazy"><figcaption>Creative Arts &amp; Innovations</figcaption></figure>
+    <figure class="reveal"><img src="images/creative-art_and_innovations/creative-11.jpeg" alt="Creative Arts &amp; Innovations project 11" loading="lazy"><figcaption>Creative Arts &amp; Innovations</figcaption></figure>
+    <figure class="reveal"><img src="images/creative-art_and_innovations/creative-12.jpeg" alt="Creative Arts &amp; Innovations project 12" loading="lazy"><figcaption>Creative Arts &amp; Innovations</figcaption></figure>
   </div>
 </section>
 
@@ -337,6 +501,39 @@ const SCHOOL = {
 /* ---------- School name everywhere ---------- */
 document.querySelectorAll('.school-name').forEach(el => el.textContent = SCHOOL.name);
 
+/* ---------- Split hero title into words for the animation ---------- */
+(function(){
+  const h1 = document.getElementById('heroTitle'); let i = 0;
+  const wrap = text => text.split(/(\s+)/).map(t => t.trim() ? `<span class="w" style="--i:${i++}">${t}</span>` : t).join('');
+  h1.innerHTML = [...h1.childNodes].map(n =>
+    n.nodeType === 3 ? wrap(n.textContent) :
+    n.tagName === 'BR' ? '<br>' : `<span class="${n.className}">${wrap(n.textContent)}</span>`).join('');
+})();
+
+/* ---------- Floating sparkles & balloons ---------- */
+function sparkle(id, count, withBalloons){
+  const box = document.getElementById(id); if (!box) return;
+  const shapes = ['✦','✧','★','•','✦','•'];
+  for (let k = 0; k < count; k++){
+    const s = document.createElement('span');
+    const balloon = withBalloons && k % 6 === 0;
+    s.textContent = balloon ? '🎈' : shapes[k % shapes.length];
+    s.style.left = Math.random()*100 + '%';
+    s.style.fontSize = (balloon ? 22 + Math.random()*16 : 8 + Math.random()*16) + 'px';
+    s.style.animationDuration = (balloon ? 14 : 8) + Math.random()*10 + 's';
+    s.style.animationDelay = -Math.random()*18 + 's';
+    s.style.setProperty('--sway', (-60 + Math.random()*120) + 'px');
+    s.style.setProperty('--o', balloon ? .85 : (.35 + Math.random()*.6).toFixed(2));
+    box.appendChild(s);
+  }
+}
+sparkle('welcomeSparkles', 40, false);
+sparkle('heroSparkles', 36, true);
+
+/* ---------- Stagger cards & photos as they appear ---------- */
+document.querySelectorAll('.stats-grid, .ach-grid, .gallery, .creative-grid').forEach(g =>
+  [...g.children].forEach((c, k) => c.style.transitionDelay = (k % 3) * .15 + 's'));
+
 /* ---------- Placeholder images (shown until you add the real file) ---------- */
 function placeholder(name, h){
   h = h || 500;
@@ -369,7 +566,7 @@ function tick(){
   document.getElementById('cd-d').textContent = d;
   document.getElementById('cd-h').textContent = h;
   document.getElementById('cd-m').textContent = m;
-  document.getElementById('cd-s').textContent = s;
+  const sEl = document.getElementById('cd-s'); sEl.textContent = s; sEl.classList.remove('pop'); void sEl.offsetWidth; sEl.classList.add('pop');
   setTimeout(tick, 1000);
 }
 tick();
@@ -378,6 +575,7 @@ tick();
 const io = new IntersectionObserver(entries => entries.forEach(e => {
   if (!e.isIntersecting) return;
   e.target.classList.add('show');
+  if (e.target.style.transitionDelay) setTimeout(() => e.target.style.transitionDelay = '', 1500);
   const num = e.target.querySelector('[data-count]');
   if (num && !num.dataset.done){
     num.dataset.done = 1;
@@ -391,7 +589,7 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 /* ---------- Lightbox ---------- */
 const lb = document.getElementById('lightbox');
-document.querySelectorAll('.gallery figure').forEach(f => f.onclick = () => {
+document.querySelectorAll('.gallery figure, .creative-grid figure').forEach(f => f.onclick = () => {
   document.getElementById('lbImg').src = f.querySelector('img').src;
   document.getElementById('lbCap').textContent = f.querySelector('figcaption').textContent;
   lb.classList.add('open');
@@ -473,6 +671,7 @@ musicBtn.onclick = () => {
 /* ---------- Welcome screen ---------- */
 document.getElementById('enterBtn').onclick = () => {
   document.getElementById('welcome').classList.add('hide');
+  document.body.classList.add('entered');
   startMusic();
   burst(300);
 };
