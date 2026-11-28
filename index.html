@@ -293,6 +293,59 @@
   .floaters span:nth-child(6){bottom:4%;right:10%;animation-delay:-10s}
   @keyframes drift{0%,100%{transform:translate(0,0) rotate(0)}33%{transform:translate(18px,-24px) rotate(15deg)}66%{transform:translate(-14px,12px) rotate(-12deg)}}
 
+  /* ---------- Anniversary Week Programme ---------- */
+  #programme{background:radial-gradient(circle at 20% 0%,var(--navy-2),var(--navy) 60%);color:#fff;position:relative;overflow:hidden}
+  #programme .section-title h2{color:#fff}
+  #programme .section-title p{color:var(--gold-light);font-size:1.05rem}
+  .prog-dates{display:table;margin:-24px auto 40px;padding:10px 26px;border-radius:40px;background:linear-gradient(135deg,var(--gold-light),var(--gold));
+    color:var(--navy);font-weight:700;letter-spacing:.5px;box-shadow:0 8px 25px rgba(0,0,0,.25)}
+  .prog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;max-width:1150px;margin:0 auto}
+  .day{position:relative;display:flex;gap:16px;align-items:center;padding:18px;border-radius:18px;background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(6px);transition:transform .3s, background .3s, box-shadow .3s}
+  .day:hover{transform:translateY(-6px);background:rgba(255,255,255,.14);box-shadow:0 14px 30px rgba(0,0,0,.25)}
+  .day-date{flex:0 0 70px;height:78px;border-radius:14px;background:#fff;color:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;
+    box-shadow:0 6px 16px rgba(0,0,0,.2)}
+  .day-date span{font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--rose)}
+  .day-date b{font-family:'Playfair Display',serif;font-size:2rem;line-height:1}
+  .day-date small{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;opacity:.7}
+  .day-icon{font-size:1.5rem;line-height:1}
+  .day-info h4{font-size:1.08rem;margin:4px 0 2px;color:#fff;font-family:'Poppins',sans-serif;font-weight:600}
+  .day-info p{font-size:.85rem;opacity:.8}
+  .day.main{background:linear-gradient(135deg,rgba(245,215,110,.28),rgba(232,93,117,.22));border:2px solid var(--gold-light);
+    box-shadow:0 0 0 0 rgba(245,215,110,.5);animation:mainGlow 2.8s ease-in-out infinite}
+  .day.main .day-date{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+  .day.main h4{color:var(--gold-light);font-size:1.2rem}
+  @keyframes mainGlow{0%,100%{box-shadow:0 0 18px rgba(245,215,110,.25)}50%{box-shadow:0 0 38px rgba(245,215,110,.6)}}
+  .day-badge{position:absolute;top:-10px;right:14px;padding:3px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:1px;display:none}
+  .day.main .day-badge{display:block;background:var(--rose);color:#fff}
+  .day.main .day-badge::before{content:"⭐ MAIN EVENT"}
+  .day.today{border:2px solid #7CFFB2}
+  .day.today .day-badge{display:block;background:#2ecc71;color:#fff}
+  .day.today .day-badge::before{content:"● TODAY"}
+  .day.past{opacity:.55}
+  .day.past .day-badge{display:block;background:rgba(255,255,255,.25);color:#fff}
+  .day.past .day-badge::before{content:"✓ DONE"}
+
+  .prog-info{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;max-width:1150px;margin:50px auto 0}
+  .info-card{background:#fff;color:var(--text);border-radius:22px;padding:28px;box-shadow:0 18px 40px rgba(0,0,0,.25);border-top:6px solid var(--gold)}
+  .info-card h3{color:var(--navy);font-size:1.45rem;margin-bottom:8px}
+  .info-sub{color:#666;font-size:.92rem;line-height:1.7;margin-bottom:18px}
+  .fee{display:flex;justify-content:space-between;align-items:center;padding:13px 4px;border-bottom:1px dashed #ddd;gap:12px}
+  .fee b{font-size:1.15rem;color:var(--navy);white-space:nowrap}
+  .fee.total{border:none;margin-top:10px;padding:14px 16px;border-radius:14px;background:linear-gradient(135deg,var(--navy),var(--navy-2));color:#fff;font-weight:600}
+  .fee.total b{color:var(--gold-light);font-size:1.5rem}
+  .donate-items{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  .donate-items span{padding:7px 14px;border-radius:20px;background:#f3e8fb;color:var(--navy);font-size:.86rem;font-weight:600}
+  .bank{border-radius:16px;padding:16px 18px;background:linear-gradient(135deg,#fff8e1,#fdf0c4);border:2px dashed var(--gold)}
+  .bank-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 0;flex-wrap:wrap}
+  .bank-row small{color:#8a6500;font-weight:600;text-transform:uppercase;letter-spacing:1px;font-size:.72rem}
+  .bank-row b{color:var(--navy)}
+  .bank-row.acct b{font-size:1.5rem;letter-spacing:2px;font-family:'Poppins',monospace}
+  .copy-btn{border:none;cursor:pointer;padding:7px 14px;border-radius:20px;background:var(--navy);color:#fff;font-family:inherit;font-size:.82rem;font-weight:600;transition:transform .2s, background .2s}
+  .copy-btn:hover{transform:scale(1.05);background:var(--navy-2)}
+  .copy-btn.done{background:#2ecc71}
+  .prog-thanks{text-align:center;margin:44px auto 0;max-width:640px;font-family:'Great Vibes',cursive;font-size:clamp(1.7rem,3.5vw,2.3rem);color:var(--gold-light)}
+
   #confetti{position:fixed;inset:0;pointer-events:none;z-index:1001}
 </style>
 </head>
@@ -320,6 +373,7 @@
   <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
   <ul id="menu">
     <li><a href="#home">Home</a></li>
+    <li><a href="#programme">Programme</a></li>
     <li><a href="#about">Our Story</a></li>
     <li><a href="#journey">Journey</a></li>
     <li><a href="#achievements">Achievements</a></li>
@@ -345,8 +399,48 @@
       <div><b id="cd-m">0</b><small>Minutes</small></div>
       <div><b id="cd-s">0</b><small>Seconds</small></div>
     </div>
-    <a href="#achievements" class="btn">✨ See Our Achievements</a>
+    <a href="#programme" class="btn">📅 View the Programme</a>
   </div>
+</section>
+
+<!-- ================= ANNIVERSARY WEEK PROGRAMME ================= -->
+<section id="programme">
+  <div class="section-title reveal"><h2>Anniversary Week Programme</h2><p>Dear Parents &amp; Guardians, you are warmly invited to celebrate with us!</p><div class="line"></div></div>
+  <div class="prog-dates reveal">📅 Monday 7th – Sunday 13th December 2026</div>
+
+  <div class="prog-grid">
+    <div class="day reveal" data-date="2026-12-07"><div class="day-date"><span>Mon</span><b>7</b><small>Dec</small></div><div class="day-info"><div class="day-icon">🎤</div><h4>Opening Address</h4><p>The celebration week officially begins</p></div><span class="day-badge"></span></div>
+    <div class="day reveal" data-date="2026-12-08"><div class="day-date"><span>Tue</span><b>8</b><small>Dec</small></div><div class="day-info"><div class="day-icon">🏅</div><h4>Games &amp; Tournaments</h4><p>Fun competitions for all our pupils</p></div><span class="day-badge"></span></div>
+    <div class="day reveal" data-date="2026-12-09"><div class="day-date"><span>Wed</span><b>9</b><small>Dec</small></div><div class="day-info"><div class="day-icon">⚽</div><h4>Friendly Football Match</h4><p>Come and cheer for our teams!</p></div><span class="day-badge"></span></div>
+    <div class="day reveal" data-date="2026-12-10"><div class="day-date"><span>Thu</span><b>10</b><small>Dec</small></div><div class="day-info"><div class="day-icon">🎪</div><h4>Bouncing Castles &amp; Trade Fair</h4><p>Play, shop and enjoy the fun fair</p></div><span class="day-badge"></span></div>
+    <div class="day reveal" data-date="2026-12-11"><div class="day-date"><span>Fri</span><b>11</b><small>Dec</small></div><div class="day-info"><div class="day-icon">🕌</div><h4>Jumu'ah Prayer</h4><p>At the Central Mosque</p></div><span class="day-badge"></span></div>
+    <div class="day reveal main" data-date="2026-12-12"><div class="day-date"><span>Sat</span><b>12</b><small>Dec</small></div><div class="day-info"><div class="day-icon">🎉</div><h4>20th Anniversary Party</h4><p>The grand celebration!</p></div><span class="day-badge"></span></div>
+    <div class="day reveal" data-date="2026-12-13"><div class="day-date"><span>Sun</span><b>13</b><small>Dec</small></div><div class="day-info"><div class="day-icon">⛪</div><h4>Church Thanksgiving</h4><p>Giving thanks for 20 wonderful years</p></div><span class="day-badge"></span></div>
+  </div>
+
+  <div class="prog-info">
+    <div class="info-card reveal">
+      <h3>👕 Jersey &amp; Party Fee</h3>
+      <p class="info-sub">Special anniversary jersey tops are available for parents who wish to wear them during the celebration.</p>
+      <div class="fee"><span>Anniversary jersey</span><b>₦7,000</b></div>
+      <div class="fee"><span>Anniversary party fee (students)</span><b>₦5,000</b></div>
+      <div class="fee total"><span>Total</span><b>₦12,000</b></div>
+    </div>
+
+    <div class="info-card reveal">
+      <h3>🤝 Support the Celebration</h3>
+      <p class="info-sub">We humbly welcome donations towards the success of the celebration. Every contribution is highly appreciated.</p>
+      <div class="donate-items"><span>🍚 Bags of rice</span><span>🛢️ Groundnut oil</span><span>🥫 Other food items</span><span>💵 Money</span></div>
+      <div class="bank">
+        <div class="bank-row"><small>Bank</small><b>First Bank</b></div>
+        <div class="bank-row"><small>Account name</small><b>Jublad Schools Limited</b></div>
+        <div class="bank-row acct"><small>Account number</small><b id="acctNo">2022528179</b>
+          <button class="copy-btn" id="copyAcct" type="button">📋 Copy</button></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="prog-thanks reveal">Thank you for being part of our journey. We look forward to celebrating this remarkable milestone with you! 💜</p>
 </section>
 
 <!-- ================= STATS ================= -->
@@ -525,7 +619,7 @@ sparkle('welcomeSparkles', 40, false);
 sparkle('heroSparkles', 36, true);
 
 /* ---------- Stagger cards & photos as they appear ---------- */
-document.querySelectorAll('.stats-grid, .ach-grid, .gallery, .creative-grid').forEach(g =>
+document.querySelectorAll('.stats-grid, .ach-grid, .gallery, .creative-grid, .prog-grid').forEach(g =>
   [...g.children].forEach((c, k) => c.style.transitionDelay = (k % 3) * .15 + 's'));
 
 /* ---------- Placeholder images (shown until you add the real file) ---------- */
@@ -580,6 +674,22 @@ const io = new IntersectionObserver(entries => entries.forEach(e => {
   io.unobserve(e.target);
 }), {threshold:.15});
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ---------- Programme: mark today / finished days, copy account number ---------- */
+(function(){
+  const t = new Date(), today = `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;
+  document.querySelectorAll('.day[data-date]').forEach(d => {
+    if (d.dataset.date === today) d.classList.add('today');
+    else if (d.dataset.date < today) d.classList.add('past');
+  });
+  const btn = document.getElementById('copyAcct');
+  btn.onclick = () => {
+    const num = document.getElementById('acctNo').textContent.trim();
+    const done = () => { btn.textContent = '✓ Copied'; btn.classList.add('done'); setTimeout(() => { btn.textContent = '📋 Copy'; btn.classList.remove('done'); }, 2000); };
+    if (navigator.clipboard) navigator.clipboard.writeText(num).then(done, () => prompt('Account number:', num));
+    else prompt('Account number:', num);
+  };
+})();
 
 /* ---------- Lightbox ---------- */
 const lb = document.getElementById('lightbox');
